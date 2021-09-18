@@ -1,13 +1,559 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/* 
+COLORS:
+  white = Used for background
+  #b0e0e6 = Powderblue | Used for header
+  ##e6fcff = Really Light Blue | Used for changing background color on :hover 
+*/
+
+@font-face {
+  font-family: 'Baloo';
+  src: url("fonts/Baloo_Bhaijaan.ttf");
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: 'LatoThin';
+  src: url("fonts/Lato-Thin.ttf");
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: Verdana, sans-serif;
+}
+
+body, #root{
+  background-color: white;
+}
+
+header{
+  padding: 0px 2px;
+  background-color: powderblue;
+}
+
+header h1{
+  font-family: 'Baloo', Verdana, sans-serif;
+  font-size: 1.7em;
+  text-align: center;
+}
+
+header .img-wrapper{
+  box-sizing: border-box;
+  padding: 0px 0.25em;
+  cursor: pointer;
+}
+
+header img{
+  min-height: 5vh;
+  max-height: 5vh;
+}
+
+h3{
+  color: rgb(41, 35, 35);
+  text-align: center;
+  padding: 1.5em 0px 0.5em 0px;
+}
+
+h5{ /*used to show type of kibble*/
+  font-size: 1.5em;
+  text-align: center;
+}
+
+ul{
+  list-style: none;
+}
+
+
+.header-height{
+  min-height: 10vh;
+  max-height: 10vh;
+}
+
+.home-height{
+  min-height: 80vh;
+  max-height: 80vh;
+}
+
+.home-option{
+  position: relative;
+  width: 65%;
+  font-family: Verdana, sans-serif;
+  box-sizing: border-box;
+  text-align: center;
+  padding: 1.5em 2em;
+  border: solid thin rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  box-shadow: 1px 1px 0.1em, -1px -1px 0.1em;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.home-option img{
+  width: 2em;
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: solid thin black;
+  padding: 0.25em;
+  background-color: white;
+}
+
+.home-option:focus, .home-option:active{
+  background-color: powderblue;
+  box-shadow: none;
+}
+
+.info-page{
+  min-height: 90vh;
+  max-height: 90vh;
+}
+
+.search-form{
+  margin-bottom: 0.5em;
+}
+
+.search-container{
+  position: relative; /*used for position absolute the suggest text span*/
+  width: 80%;
+  padding-top: 1em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1em;
+  border-bottom: solid medium black;
+}
+
+.search-input{
+  position: relative; /*a position value is required in order to use z-index*/
+  z-index: 1; /*z-index moves this element on top of suggest search, otherwise it appears underneath*/
+  font-size: 1.2em;
+  width: 100%;
+  background-color: transparent; /*required in order to see the suggestive text*/
+}
+
+.search-container input:focus {
+  outline: none;
+}
+
+span.suggestive-text{
+  color: rgb(170, 170, 170);
+  width: 100%;
+  font-size: 1.2em;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+  pointer-events: none;
+  white-space: pre;
+  overflow: hidden;
+}
+
+.suggestion-box{
+  box-sizing: border-box;
+  width: 90%;
+  max-height: 65vh;
+  margin: 0px auto;
+  border: solid thin black;
+  overflow: auto;
+}
+
+.search-result{
+  position: relative;
+  min-height: 15vh;
+  display: flex;
+  border-bottom: solid thin black;
+  padding: 0px 0.5em;
+  cursor: pointer;
+}
+
+.home-option:hover, .search-result:hover{
+  background-color: #e6fcff;
+}
+
+.search-result > *{
+  padding: 0.2em;
+}
+
+.search-result-img-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 25%;
+}
+
+.search-result img{
+  max-width: 100%;
+  max-height: 15vh; /*Same as min height of .search-result*/
+}
+
+.search-result-text-container{
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.forward-arrow-container{
+  position: relative;
+  width: 15%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.forward-arrow{
+  width: 50% !important;
+  transform: rotate(180deg);
+  filter: opacity(0.1);
+}
+
+.tame-method{
+  font-style: italic;
+}
+
+.sub-ingredients{
+  padding-left: 1.25em;
+  font-size: 0.9em;
+}
+
+.kibble-info{
+  text-align: center;
+  font-size: 1.2em;
+  padding: 1em;
+}
+
+.kibble-type{
+  font-size: 1.6em;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.kibble-recipe{
+  padding: 0.5em 1em;
+  box-sizing: border-box;
+  width: 300px;
+  margin: auto;
+}
+
+.recipe{
+  font-family: 'LatoThin', sans-serif;
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: bold;
+  padding: 0.5em 0px;
+  border: solid thin black; 
+  border-bottom: none;/*Do not give border bottom*/
+}
+
+.ingredients{
+  border: solid thin black;
+  font-size: 1.1em;
+  padding: 0.1em;
+  min-height: 50vh;
+}
+
+.kibble-page-title{
+  padding-top: 0.7em;
+  padding-bottom: 0px;
+}
+
+.kibble-page-title:first-of-type{
+  padding-top: 0.5em;
+}
+
+
+
+
+
+
+
+
+
+/*INDIVIDUAL KIBBLE TYPE STYLES*/
+.basic-kibble{
+  color: gray;
+  text-shadow: 0 0 0.125em rgba(128, 128, 128, 0.863), 0 0 0.45em rgba(128, 128, 128, 0.87);
+}
+
+.simple-kibble{
+  color: rgb(97, 243, 97);
+  text-shadow: 0 0 0.125em rgb(117, 248, 117), 0 0 0.45em rgb(117, 248, 117);
+}
+
+.regular-kibble{
+  color: rgb(65, 94, 225);
+  text-shadow: 0 0 0.125em rgb(70, 113, 240), 0 0 0.45em rgb(70, 113, 240);
+}
+
+.superior-kibble{
+  color: rgb(216, 112, 169);
+  text-shadow: 0 0 0.125em palevioletred, 0 0 0.45em palevioletred;
+}
+
+.exceptional-kibble{
+  color: rgb(253, 224, 56);
+  text-shadow: 0 0 0.125em rgb(255, 251, 37), 0 0 0.45em rgb(255, 251, 37);
+}
+
+.extraordinary-kibble{
+  color: rgb(0, 225, 255);
+  text-shadow: 0 0 0.125em aqua, 0 0 0.45em aqua;
+}
+
+
+
+/*FLEX CLASSES*/
+.flex{
+  display: flex;
+}
+.flex-child{
+  flex: 1;
+}
+.flex-direction-col{
+  flex-direction: column;
+}
+.vert-center{
+  align-items: center;
+}
+.horz-center{
+  justify-content: center;
+}
+.space-between{
+  justify-content: space-between;
+}
+
+
+
+
+
+
+/* MEDIA QUERIES */
+
+@media (min-width:320px) { 
+  /* smartphones, portrait iPhone, portrait 480x320 phones (Android) */ 
+
+  .home-height{
+    padding-top: 1.5em; /*Pushes the main layout down so it looks more centered*/
+  }
+}
+@media (min-width:480px) { 
+  /* smartphones, Android phones, landscape iPhone */ 
+
+  .home-option{
+    padding: 2.5em 2em; /* Add one em to top and bottom padding from original */
+  }
+
+  .forward-arrow-container{
+    width: 12%; /*default is 15%*/
+  }
+
+  .kibble-recipe{ /*width for single recipe*/
+    width: 325px; /*default is 300px*/
+  }
+}
+@media (min-width:600px) { 
+  /* portrait tablets, portrait iPad, e-readers (Nook/Kindle), landscape 800x480 phones (Android) */
+
+  .home-option{
+    width: 75%; /* Add 10% width */
+    padding: 2.7em 2em; /* Add 1.2em to top and bottom from original */
+  }
+
+  .forward-arrow-container{
+    width: 10%; /*default is 15%*/
+  }
+
+  .search-result-img-container{
+    width: 20%;
+  }
+
+  .kibble-recipe{ /*width for single recipe*/
+    width: 350px; /*default is 300px*/
+  }
+}
+@media (min-width:801px) { 
+  /* tablet, landscape iPad, lo-res laptops ands desktops */ 
+
+  .search-container{
+    width: 60%; /* Remove 20% from original */
+  }
+
+  .suggestion-box{
+    width: 70%; /* Remove 20% from original */
+  }
+
+  .forward-arrow-container{
+    width: 7%; /*default is 15%*/
+  }
+
+  .kibble-recipe-wrapper{
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  .kibble-recipe-wrapper > div{
+    width: 50%;
+  }
+
+  .kibble-recipe{ /*width for single recipe*/
+    width: 375px; /*default is 300px*/
+  }
+
+  .kibble-recipe-wrapper > div > .kibble-recipe{ /*Width for viewing all recipes*/
+    width: 80%;
+  }
+
+  .ingredients{
+    min-height: 55vh;
+  }
+
+}
+@media (min-width:1024px) { 
+  /* big landscape tablets, laptops, and desktops */
+
+  header h1{
+    /*Must use header h1 for specificity*/
+    font-size: 2em;
+  }
+
+  header .img-wrapper{
+    padding: 0px 0.75em;
+  }
+  
+  h3{
+    font-size: 1.7em;
+  }
+
+  .search-container input{
+    font-size: 1.4em; /*must be the same as .suggestive-text*/
+  }
+
+  span.suggestive-text{
+    font-size: 1.4em; /*must be the same as .search-container input*/
+  }
+
+  .search-result-text-container p{
+    font-size: 1.2em;
+  }
+
+  .home-height{
+    flex-direction: row;
+  }
+
+  .home-option{
+    min-height: 20vh;
+    max-height: 20vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    padding: 3.2em 2em;
+  }
+
+  .kibble-recipe{ /*width for single recipe*/
+    width: 400px; /*default is 300px*/
+  }
+
+  .kibble-info{
+    font-size: 1.3em;
+  }
+
+  .kibble-type{
+    font-size: 2em;
+  }
+
+  .ingredients{
+    min-height: 60vh;
+    font-size: 1.2em;
+  }
+}
+
+@media (min-width:1281px) { 
+  /* hi-res laptops */ 
+
+  header h1{
+    /*Must use header h1 for specificity*/
+    font-size: 2.5em;
+  }
+
+  .home-option{
+    font-size: 1.6rem;
+  }
+
+  .forward-arrow-container{
+    width: 5%; /*default is 15%*/
+  }
+
+  .search-result-img-container{
+    width: 15%;
+  }
+
+  .kibble-recipe-wrapper{
+    justify-content: space-around;
+  }
+
+  .kibble-recipe-wrapper > div{
+    width: 33%;
+  }
+
+  .kibble-recipe{ /*width for single recipe*/
+    width: 500px; /*default is 300px*/
+  }
+
+  .kibble-recipe-wrapper > div > .kibble-recipe{ /*Width for viewing all recipes*/
+    width: 90%;
+  }
+}
+
+@media (min-width:2000px) { 
+  /* hi-res desktops */ 
+  header h1{
+    /*Must use header h1 for specificity*/
+    font-size: 4em;
+  }
+
+  .home-option{
+    font-size: 3.3rem;
+  }
+
+  h3{
+    font-size: 2.5em;
+  }
+
+  .search-container input{
+    font-size: 2.2em; /*must be the same as .suggestive-text*/
+  }
+
+  span.suggestive-text{
+    font-size: 2.2em; /*must be the same as .search-container input*/
+  }
+
+  .search-result-text-container p{
+    font-size: 1.8em;
+  }
+
+  .suggestion-box{
+    max-height: 70vh;
+  }
+
+  .kibble-info{
+    font-size: 2.3em;
+  }
+
+  .kibble-type{
+    font-size: 3.5em;
+  }
+
+  .recipe{
+    font-size: 2.2em;
+  }
+
+  .ingredients{
+    min-height: 60vh;
+    font-size: 1.8em;
+  }
+
+  .kibble-recipe{ /*width for single recipe*/
+    width: 600px; /*default is 300px*/
+  }
 }
